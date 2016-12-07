@@ -10,6 +10,11 @@ namespace LisDev\Delivery;
  */
 class NovaPoshtaApi2 {
 	/**
+	 * @var string
+	 */
+	protected $apiPath = 'https://api.novaposhta.ua/v2.0/';
+	
+	/**
 	 * Key for API NovaPoshta
 	 * 
 	 * @var string $key
@@ -73,6 +78,26 @@ class NovaPoshtaApi2 {
 			->setLanguage($language)
 			->setConnectionType($connectionType)
 			->model('Common');
+	}
+	
+	/**
+	 * Setter for apiPath property
+	 * 
+	 * @param string $apiPath NovaPoshta API server
+	 * @return NovaPoshtaApi2
+	 */
+	function setApiPath($apiPath) {
+		$this->apiPath = $apiPath;
+		return $this;
+	}
+	
+	/**
+	 * Getter for apiPath property
+	 * 
+	 * @return string
+	 */
+	function getApiPath() {
+		return $this->apiPath;
 	}
 	
 	/**
@@ -202,9 +227,7 @@ class NovaPoshtaApi2 {
 	 */
 	private function request($model, $method, $params = NULL) {
 		// Get required URL
-		$url = $this->format == 'xml'
-			? 'https://api.novaposhta.ua/v2.0/xml/'
-			: 'https://api.novaposhta.ua/v2.0/json/';
+		$url = $this->apiPath . ($this->format == 'xml' ? 'xml/' : 'json/');
 		
 		$data = array(
 			'apiKey' => $this->key,
